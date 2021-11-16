@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 
 import requests
@@ -15,11 +14,11 @@ def get_installed_instrument_data(config):
         print(f"Error when getting instrument data via the API - ", error)
 
 
-def get_active_survey_day_instruments(installed_instrument_data):
-    print(f"Getting active survey day instruments")
+def get_instruments_with_active_survey_day_today_and_cases(installed_instrument_data):
+    print(f"Getting instruments with an active survey day of today and has cases")
     active_survey_day_instruments = []
     for instrument in installed_instrument_data:
-        if instrument['activeToday']:
+        if instrument['activeToday'] and instrument['dataRecordCount'] > 0:
             active_survey_day_instruments.append(instrument['name'])
     return active_survey_day_instruments
 
@@ -28,18 +27,29 @@ def create_daybatch_for_instrument(config, instrument):
     print(f"Creating daybatch for instrument {instrument}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
-    for attempt in range(3):
-        try:
-            response = requests.post(
-                f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch",
-                json=post_data)
-            if response.status_code == 201:
-                print(f"Daybatch successfully created for {instrument}")
-                return
-            else:
-                print(f"Failure when creating daybatch for instrument {instrument} via the API - ",
-                      response.status_code)
-            if attempt != 2:
-                time.sleep(300)
-        except requests.exceptions.RequestException as error:
-            print(f"Error when creating daybatch for instrument {instrument} via the API - ", error)
+    try:
+        response = requests.post(
+            f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch",
+            json=post_data)
+        if response.status_code == 201:
+            print(f"Daybatch successfully created for {instrument}")
+        else:
+            print(f"Failure when creating daybatch for instrument {instrument} via the API - ",
+                  response.status_code)
+    except requests.exceptions.RequestException as error:
+        print(f"Error when creating daybatch for instrument {instrument} via the API - ", error)
+
+
+def check_instrument_has_daybatch(config, instrument):
+    print(f"Checking if instrument {instrument} has a daybatch for today")
+    try:
+        response = requests.get(
+            f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch")
+        if response:
+            print(f"Instrument {instrument} has a daybatch")
+            return True
+        else:
+            print(f"Instrument {instrument} does not have a daybatch")
+            return False
+    except requests.exceptions.RequestException as error:
+        print(f"Error when checking if instrument {instrument} has a daybatch for today via the API - ", error)

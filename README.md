@@ -74,4 +74,12 @@ BLAISE_SERVER_PARK="gusty"
 
 Run the "create_daybatches" Cloud Function:
 
+```
 python -c "from main import create_daybatches; create_daybatches(None, None)"
+```
+
+Run the "check_daybatches" Cloud Function:
+
+```
+python -c "from main import check_daybatches; check_daybatches(None, None)"
+```
