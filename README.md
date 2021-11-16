@@ -1,6 +1,10 @@
 # blaise-daybatch-functions
 
-blah blah blah
+> A day batch is a selection of cases from the entire Blaise data file that will be worked on that day. Since the CATI system cannot work without a day batch, you have to create a day batch per CATI survey for each active day in the survey period.
+
+This repo has functions for creating daybatches and checking that daybatches have been created. Notifications are sent
+if daybatches don't exist but should. These functions are deployed to GCP as Cloud Functions and will be triggered via
+Cloud Scheduler.
 
 ### Local Setup
 
@@ -61,9 +65,11 @@ Create an .env file in the root of the project and add the following environment
 | Variable | Description | Example |
 | --- | --- | --- |
 | BLAISE_API_URL | The RESTful API URL the application will use to get installed questionnaire data. | localhost:90 |
+| BLAISE_SERVER_PARK | The name of the Blaise server park. | gusty |
 
 ```shell
 BLAISE_API_URL="localhost:90"
+BLAISE_SERVER_PARK="gusty"
 ```
 
 Run the "create_daybatches" Cloud Function:

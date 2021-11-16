@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 import requests
@@ -27,14 +28,18 @@ def create_daybatch_for_instrument(config, instrument):
     print(f"Creating daybatch for instrument {instrument}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
-    try:
-        response = requests.post(
-            f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch",
-            json=post_data)
-        if response.status_code == 201:
-            print(f"Daybatch successfully created for {instrument}")
-            return
-        else:
-            print(f"Failure when creating daybatch for instrument {instrument} via the API - ", response.status_code)
-    except requests.exceptions.RequestException as error:
-        print(f"Error when creating daybatch for instrument {instrument} via the API - ", error)
+    for attempt in range(3):
+        try:
+            response = requests.post(
+                f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch",
+                json=post_data)
+            if response.status_code == 201:
+                print(f"Daybatch successfully created for {instrument}")
+                return
+            else:
+                print(f"Failure when creating daybatch for instrument {instrument} via the API - ",
+                      response.status_code)
+            if attempt != 2:
+                time.sleep(300)
+        except requests.exceptions.RequestException as error:
+            print(f"Error when creating daybatch for instrument {instrument} via the API - ", error)
