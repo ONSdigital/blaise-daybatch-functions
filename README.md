@@ -83,3 +83,9 @@ Run the "check_daybatches" Cloud Function:
 ```
 python -c "from main import check_daybatches; check_daybatches(None, None)"
 ```
+
+Run Tests
+
+```shell
+poetry run python -m pytest
+```

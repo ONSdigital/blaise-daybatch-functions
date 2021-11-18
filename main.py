@@ -19,7 +19,7 @@ def create_daybatches(_event, _context):
     instruments_with_active_survey_day_today_and_cases = get_instruments_with_active_survey_day_today_and_cases(
         installed_instrument_data)
     if not instruments_with_active_survey_day_today_and_cases:
-        print(f"No instruments installed with an active survey day of today and cases")
+        print(f"No instruments installed with an active survey day of today and has cases")
         return
     for instrument in instruments_with_active_survey_day_today_and_cases:
         if not check_instrument_has_daybatch(config, instrument):
@@ -39,7 +39,7 @@ def check_daybatches(_event, _context):
     instruments_with_active_survey_day_today_and_cases = get_instruments_with_active_survey_day_today_and_cases(
         installed_instrument_data)
     if not instruments_with_active_survey_day_today_and_cases:
-        print(f"No instruments installed with an active survey day of today and cases")
+        print(f"No instruments installed with an active survey day of today and has cases")
         return
     for instrument in instruments_with_active_survey_day_today_and_cases:
         if not check_instrument_has_daybatch(config, instrument):

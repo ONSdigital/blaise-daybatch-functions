@@ -11,7 +11,7 @@ def get_installed_instrument_data(config):
         data = response.json()
         return data
     except requests.exceptions.RequestException as error:
-        print(f"Error when getting instrument data via the API - ", error)
+        print(f"Error when getting installed instrument data via the API - ", error)
 
 
 def get_instruments_with_active_survey_day_today_and_cases(installed_instrument_data):
@@ -46,10 +46,10 @@ def check_instrument_has_daybatch(config, instrument):
         response = requests.get(
             f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch")
         if response:
-            print(f"Instrument {instrument} has a daybatch")
+            print(f"Instrument {instrument} has a daybatch for today")
             return True
         else:
-            print(f"Instrument {instrument} does not have a daybatch")
+            print(f"Instrument {instrument} does not have a daybatch for today")
             return False
     except requests.exceptions.RequestException as error:
         print(f"Error when checking if instrument {instrument} has a daybatch for today via the API - ", error)

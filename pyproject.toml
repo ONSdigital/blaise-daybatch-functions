@@ -8,6 +8,10 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.8"
 requests = "^2.26.0"
 python-dotenv = "^0.19.2"
+responses = "^0.16.0"
+requests-mock = "^1.9.3"
+pytest = "^6.2.5"
+mock = "^4.0.3"
 
 [tool.poetry.dev-dependencies]
 
