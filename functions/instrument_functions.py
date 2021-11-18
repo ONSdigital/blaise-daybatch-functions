@@ -34,8 +34,7 @@ def create_daybatch_for_instrument(config, instrument):
         if response.status_code == 201:
             print(f"Daybatch successfully created for {instrument}")
         else:
-            print(f"Failure when creating daybatch for instrument {instrument} via the API - ",
-                  response.status_code)
+            print(f"Failure when creating daybatch for instrument {instrument} via the API - ", response.status_code)
     except requests.exceptions.RequestException as error:
         print(f"Error when creating daybatch for instrument {instrument} via the API - ", error)
 
