@@ -13,6 +13,7 @@ def mock_config():
 
 @pytest.fixture
 def mock_installed_instrument_data():
+    # Three installed instruments but only two are valid for daybatch creation
     return [
         {
             "surveyDays": [
