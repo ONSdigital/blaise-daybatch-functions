@@ -1,8 +1,8 @@
 from behave import *
 
-use_step_matcher("re")
+from main import *
 
-no_instruments_installed = []
+use_step_matcher("re")
 
 
 @given("there are no instruments installed")
@@ -10,7 +10,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    mock_get_installed_instrument_data = no_instruments_installed
+    installed_instruments = []
     raise NotImplementedError(u'STEP: Given there are no instruments installed')
 
 
@@ -19,6 +19,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
+    create_daybatches(None, None)
     raise NotImplementedError(u'STEP: When the create daybatch process is triggered')
 
 
