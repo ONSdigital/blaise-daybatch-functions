@@ -15,17 +15,18 @@ def create_daybatches(_event, _context):
     installed_instrument_data = get_installed_instrument_data(config)
     if not installed_instrument_data:
         print(f"No instruments installed")
-        return
+        return "No instruments installed"
     instruments_with_active_survey_day_today_and_cases = get_instruments_with_active_survey_day_today_and_cases(
         installed_instrument_data)
     if not instruments_with_active_survey_day_today_and_cases:
         print(f"No instruments installed with an active survey day of today and has cases")
-        return
+        return "No instruments installed with an active survey day of today and has cases"
     for instrument in instruments_with_active_survey_day_today_and_cases:
         if not check_instrument_has_daybatch(config, instrument):
             create_daybatch_for_instrument(config, instrument)
         else:
             print(f"Instrument {instrument} already has a daybatch for today")
+    return "Finished"
 
 
 def check_daybatches(_event, _context):
@@ -35,16 +36,17 @@ def check_daybatches(_event, _context):
     installed_instrument_data = get_installed_instrument_data(config)
     if not installed_instrument_data:
         print("No instruments installed")
-        return
+        return "No instruments installed"
     instruments_with_active_survey_day_today_and_cases = get_instruments_with_active_survey_day_today_and_cases(
         installed_instrument_data)
     if not instruments_with_active_survey_day_today_and_cases:
         print(f"No instruments installed with an active survey day of today and has cases")
-        return
+        return "No instruments installed with an active survey day of today and has cases"
     for instrument in instruments_with_active_survey_day_today_and_cases:
         if not check_instrument_has_daybatch(config, instrument):
             # todo - add email alert
             pass
+    return "Finished"
 
 
 if os.path.isfile("./.env"):

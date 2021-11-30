@@ -1,5 +1,6 @@
 from functions.instrument_functions import get_installed_instrument_data, \
-    get_instruments_with_active_survey_day_today_and_cases, check_instrument_has_daybatch
+    get_instruments_with_active_survey_day_today_and_cases, check_instrument_has_daybatch, \
+    create_daybatch_for_instrument
 
 
 def test_get_installed_instrument_data(requests_mock, mock_config, mock_installed_instrument_data):
@@ -24,11 +25,21 @@ def test_get_instruments_with_active_survey_day_today_and_cases_when_no_instrume
     assert get_instruments_with_active_survey_day_today_and_cases(mock_installed_instrument_data_with_no_cases) == []
 
 
+def test_create_daybatch_for_instrument_when_success(requests_mock, mock_config):
+    requests_mock.post(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=201)
+    assert create_daybatch_for_instrument(mock_config, "DST2106Z") == "Success"
+
+
+def test_create_daybatch_for_instrument_when_failure(requests_mock, mock_config):
+    requests_mock.post(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=500)
+    assert create_daybatch_for_instrument(mock_config, "DST2106Z") == "Failure"
+
+
 def test_check_instrument_has_daybatch_when_true(requests_mock, mock_config):
-    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106X/daybatch", status_code=200)
-    assert check_instrument_has_daybatch(mock_config, "DST2106X") is True
+    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=200)
+    assert check_instrument_has_daybatch(mock_config, "DST2106Z") is True
 
 
 def test_check_instrument_has_daybatch_when_false(requests_mock, mock_config):
-    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Y/daybatch", status_code=500)
-    assert check_instrument_has_daybatch(mock_config, "DST2106Y") is False
+    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=500)
+    assert check_instrument_has_daybatch(mock_config, "DST2106Z") is False
