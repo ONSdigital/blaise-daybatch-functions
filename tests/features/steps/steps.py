@@ -43,8 +43,7 @@ def mock_create_daybatch(context):
 
 @given("there are no instruments installed")
 def step_impl(context):
-    with mock.patch("main.get_installed_instrument_data") as mock_get_installed_instrument_data:
-        mock_get_installed_instrument_data.return_value = []
+    context.installed_instrument_data = {}
 
 
 @when("the create daybatch process is triggered")
