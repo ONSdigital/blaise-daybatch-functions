@@ -66,6 +66,7 @@ Create an .env file in the root of the project and add the following environment
 | --- | --- | --- |
 | BLAISE_API_URL | The RESTful API URL the application will use to get installed questionnaire data. | localhost:90 |
 | BLAISE_SERVER_PARK | The name of the Blaise server park. | gusty |
+| NOTIFY_API_KEY | The API key for the GOV.UK Notify service. | blah-blah-blah |
 | TO_NOTIFY_EMAIL | The email address to notify when a daybatch doesn't exist but should. | blah@blah.blah |
 
 Example .env file:
@@ -73,6 +74,7 @@ Example .env file:
 ```shell
 BLAISE_API_URL="localhost:90"
 BLAISE_SERVER_PARK="gusty"
+NOTIFY_API_KEY="blah-blah-blah"
 TO_NOTIFY_EMAIL="blah@blah.blah"
 ```
 

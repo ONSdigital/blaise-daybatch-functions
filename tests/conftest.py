@@ -8,6 +8,7 @@ def mock_config():
     return Config(
         blaise_server_park="blah",
         blaise_api_url="blah",
+        notify_api_key="blah",
         to_notify_email="blah"
     )
 
