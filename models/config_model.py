@@ -22,7 +22,7 @@ class Config:
     def log(self):
         print(f"Configuration - blaise_server_park: {self.blaise_server_park}")
         print(f"Configuration - blaise_api_url: {self.blaise_api_url}")
-        if self.notify_api_key is None or self.notify_api_key is "null":
+        if self.notify_api_key is None or self.notify_api_key == "null":
             print("Configuration - notify_api_key: None / null")
         else:
             print("Configuration - notify_api_key: Provided")
