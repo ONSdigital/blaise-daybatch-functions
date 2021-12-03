@@ -7,7 +7,8 @@ from models.config_model import Config
 def mock_config():
     return Config(
         blaise_server_park="blah",
-        blaise_api_url="blah"
+        blaise_api_url="blah",
+        to_notify_email="blah"
     )
 
 

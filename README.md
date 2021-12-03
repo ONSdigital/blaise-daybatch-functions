@@ -66,10 +66,14 @@ Create an .env file in the root of the project and add the following environment
 | --- | --- | --- |
 | BLAISE_API_URL | The RESTful API URL the application will use to get installed questionnaire data. | localhost:90 |
 | BLAISE_SERVER_PARK | The name of the Blaise server park. | gusty |
+| TO_NOTIFY_EMAIL | The email address to notify when a daybatch doesn't exist but should. | blah@blah.blah |
+
+Example .env file:
 
 ```shell
 BLAISE_API_URL="localhost:90"
 BLAISE_SERVER_PARK="gusty"
+TO_NOTIFY_EMAIL="blah@blah.blah"
 ```
 
 Run the "create_daybatches" Cloud Function:
