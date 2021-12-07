@@ -78,16 +78,18 @@ NOTIFY_API_KEY="blah-blah-blah"
 TO_NOTIFY_EMAIL="blah@blah.blah"
 ```
 
+The local environment variables aren't necessary if you're only running the unit tests and the behave tests.
+
 Run the "create_daybatches" Cloud Function:
 
 ```
-python -c "from main import create_daybatches; create_daybatches(None, None)"
+poetry run python -c "from main import create_daybatches; create_daybatches(None, None)"
 ```
 
 Run the "check_daybatches" Cloud Function:
 
 ```
-python -c "from main import check_daybatches; check_daybatches(None, None)"
+poetry run python -c "from main import check_daybatches; check_daybatches(None, None)"
 ```
 
 Run Unit Tests

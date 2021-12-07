@@ -2,9 +2,12 @@ import os
 
 from dotenv import load_dotenv
 
-from functions.instrument_functions import get_installed_instrument_data, \
-    get_instruments_with_active_survey_day_today_and_cases, \
-    create_daybatch_for_instrument, check_instrument_has_daybatch
+from functions.instrument_functions import (
+    get_installed_instrument_data,
+    get_instruments_with_active_survey_day_today_and_cases,
+    create_daybatch_for_instrument,
+    check_instrument_has_daybatch
+)
 from functions.notify_functions import send_email_notification
 from models.config_model import Config
 
