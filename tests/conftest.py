@@ -8,7 +8,7 @@ def mock_config():
     return Config(
         blaise_server_park="blah",
         blaise_api_url="blah",
-        notify_api_key="blah",
+        notify_api_key="blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah",
         to_notify_email="blah"
     )
 
@@ -273,3 +273,23 @@ def mock_installed_instrument_data_with_no_cases():
             ]
         }
     ]
+
+
+@pytest.fixture
+def mock_notify_api_response():
+    return {
+        "content": {
+            "body": "Questionnaire DST2106Z does not have a daybatch",
+            "from_email": "blaise.daybatch.notify@notifications.service.gov.uk",
+            "subject": "Questionnaire DST2106Z does not have a daybatch"
+        },
+        "id": "blah-blah-blah",
+        "reference": "None",
+        "scheduled_for": "None",
+        "template": {
+            "id": "blah-blah-blah",
+            "uri": "https://api.notifications.service.gov.uk/services/blah-blah-blah/templates/blah-blah-blah",
+            "version": 3
+        },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/blah-blah-blah"
+    }
