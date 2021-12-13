@@ -1,6 +1,9 @@
-from functions.instrument_functions import get_installed_instrument_data, \
-    get_instruments_with_active_survey_day_today_and_cases, check_instrument_has_daybatch, \
+from functions.instrument_functions import (
+    get_installed_instrument_data,
+    get_instruments_with_active_survey_day_today_and_cases,
+    check_instrument_has_daybatch,
     create_daybatch_for_instrument
+)
 
 
 def test_get_installed_instrument_data(requests_mock, mock_config, mock_installed_instrument_data):
@@ -36,10 +39,10 @@ def test_create_daybatch_for_instrument_when_failure(requests_mock, mock_config)
 
 
 def test_check_instrument_has_daybatch_when_true(requests_mock, mock_config):
-    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=200)
+    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch/today", json=True)
     assert check_instrument_has_daybatch(mock_config, "DST2106Z") is True
 
 
 def test_check_instrument_has_daybatch_when_false(requests_mock, mock_config):
-    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch", status_code=500)
+    requests_mock.get(f"http://blah/api/v1/cati/serverparks/blah/instruments/DST2106Z/daybatch/today", json=False)
     assert check_instrument_has_daybatch(mock_config, "DST2106Z") is False

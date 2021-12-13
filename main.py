@@ -8,7 +8,7 @@ from functions.instrument_functions import (
     create_daybatch_for_instrument,
     check_instrument_has_daybatch
 )
-from functions.notify_functions import send_email_notification
+from functions.notify_functions import send_email_notification_for_instrument_without_daybatch
 from models.config_model import Config
 
 
@@ -48,7 +48,7 @@ def check_daybatches(_event, _context):
         return "No instruments installed with an active survey day of today and has cases"
     for instrument in instruments_with_active_survey_day_today_and_cases:
         if not check_instrument_has_daybatch(config, instrument):
-            send_email_notification(config, instrument)
+            send_email_notification_for_instrument_without_daybatch(config, instrument)
     return "Finished"
 
 
