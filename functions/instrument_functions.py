@@ -45,8 +45,8 @@ def check_instrument_has_daybatch(config, instrument):
     print(f"Checking if instrument {instrument} has a daybatch for today")
     try:
         response = requests.get(
-            f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch")
-        if response:
+            f"http://{config.blaise_api_url}/api/v1/cati/serverparks/{config.blaise_server_park}/instruments/{instrument}/daybatch/today")
+        if response.json():
             print(f"Instrument {instrument} has a daybatch for today")
             return True
         else:
