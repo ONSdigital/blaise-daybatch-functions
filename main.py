@@ -26,10 +26,13 @@ def create_daybatches(_event, _context):
         print(f"No instruments installed with an active survey day of today and has cases")
         return "No instruments installed with an active survey day of today and has cases"
     for instrument in instruments_with_active_survey_day_today_and_cases:
-        if not check_instrument_has_daybatch(config, instrument):
-            create_daybatch_for_instrument(config, instrument)
-        else:
-            print(f"Instrument {instrument} already has a daybatch for today")
+        try:
+            if not check_instrument_has_daybatch(config, instrument):
+                create_daybatch_for_instrument(config, instrument)
+            else:
+                print(f"Instrument {instrument} already has a daybatch for today")
+        except Exception as error:
+            print(f"An error '{error}' occured whilst checking/creating a daybatch for instrument {instrument}")
     return "Finished"
 
 
@@ -47,8 +50,11 @@ def check_daybatches(_event, _context):
         print(f"No instruments installed with an active survey day of today and has cases")
         return "No instruments installed with an active survey day of today and has cases"
     for instrument in instruments_with_active_survey_day_today_and_cases:
-        if not check_instrument_has_daybatch(config, instrument):
-            send_email_notification_for_instrument_without_daybatch(config, instrument)
+        try:
+            if not check_instrument_has_daybatch(config, instrument):
+                send_email_notification_for_instrument_without_daybatch(config, instrument)
+        except Exception as error:
+            print(f"An error '{error}' occured whilst checking a daybatch or sending an email for instrument {instrument}")                
     return "Finished"
 
 
