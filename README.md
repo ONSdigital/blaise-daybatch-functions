@@ -6,6 +6,12 @@ This repo has functions for creating daybatches and checking that daybatches hav
 if daybatches don't exist but should. These functions are deployed to GCP as Cloud Functions and will be triggered via
 Cloud Scheduler.
 
+An email will be sent to the users *if* Daybatch creation fails *or* there is no baybatch.
+
+The email template comes from gov.notify portal (see Rich for credentials :eyes).
+
+Email wording changed on 07/04/22 to "Questionnaire {instrument} may not have a daybatch".
+
 ### Local Setup
 
 Clone the project locally:
@@ -19,14 +25,14 @@ Setup a virtual environment:
 macOS:
 
 ```shell
-python3 -m venv venv  
+python3 -m venv venv
 source venv/bin/activate
 ```
 
 Windows:
 
 ```shell
-python -m venv venv  
+python -m venv venv
 venv\Scripts\activate
 ```
 
