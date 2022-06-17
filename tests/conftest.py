@@ -14,8 +14,8 @@ def mock_config():
 
 
 @pytest.fixture
-def mock_installed_instrument_data():
-    # Three installed instruments but only two are valid for daybatch creation
+def mock_installed_questionnaire_data():
+    # Three installed questionnaires but only two are valid for daybatch creation
     return [
         {
             "surveyDays": [
@@ -102,7 +102,7 @@ def mock_installed_instrument_data():
 
 
 @pytest.fixture
-def mock_installed_instrument_data_with_no_active_survey_day_today():
+def mock_installed_questionnaire_data_with_no_active_survey_day_today():
     return [
         {
             "surveyDays": [
@@ -189,7 +189,7 @@ def mock_installed_instrument_data_with_no_active_survey_day_today():
 
 
 @pytest.fixture
-def mock_installed_instrument_data_with_no_cases():
+def mock_installed_questionnaire_data_with_no_cases():
     return [
         {
             "surveyDays": [
