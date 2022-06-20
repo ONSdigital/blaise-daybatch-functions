@@ -10,7 +10,7 @@ An email will be sent to the users *if* Daybatch creation fails *or* there is no
 
 The email template comes from gov.notify portal (see Rich for credentials :eyes).
 
-Email wording changed on 07/04/22 to "Questionnaire {instrument} may not have a daybatch".
+Email wording changed on 07/04/22 to "Questionnaire {questionnaire} may not have a daybatch".
 
 ### Local Setup
 
