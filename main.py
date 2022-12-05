@@ -1,3 +1,4 @@
+import concurrent.futures
 import os
 
 from dotenv import load_dotenv
@@ -28,7 +29,12 @@ def create_daybatches(_event, _context):
     for questionnaire in questionnaires_with_active_survey_day_today_and_cases:
         try:
             if not check_questionnaire_has_daybatch(config, questionnaire):
-                create_daybatch_for_questionnaire(config, questionnaire)
+
+                with concurrent.futures.ProcessPoolExecutor() as executor:
+                    executor.map(
+                        create_daybatch_for_questionnaire(config, questionnaire)
+                    )
+
             else:
                 print(f"Questionnaire {questionnaire} already has a daybatch for today")
         except Exception as error:
