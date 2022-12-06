@@ -25,6 +25,7 @@ def __create_daybatches_concurrently(config: Config, questionnaire: List[str]):
         print(
             f"An error '{error}' occured whilst checking/creating a daybatch for questionnaire {questionnaire}")
 
+
 def create_daybatches(_event, _context):
     print(f"Running Cloud Function - create_daybatches")
     config = Config.from_env()
