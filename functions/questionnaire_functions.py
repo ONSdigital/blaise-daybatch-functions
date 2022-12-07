@@ -25,16 +25,23 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
     return active_survey_day_questionnaires
 
 
+def fire_and_forget(f):
+    def wrapped(*args, **kwargs):
+        return asyncio.get_event_loop().run_in_executor(None, f, *args, *kwargs)
+
+    return wrapped
+
+
+@fire_and_forget
 def create_daybatch_for_questionnaire(config, questionnaire):
-    asyncio.ensure_future(create_daybatch_for_questionnaire_async(config, questionnaire))
+    create_daybatch_for_questionnaire_background(config, questionnaire)
 
 
-async def create_daybatch_for_questionnaire_async(config, questionnaire):
+def create_daybatch_for_questionnaire_background(config, questionnaire):
     print(f"Creating daybatch for questionnaire {questionnaire}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
     try:
-        await asyncio.sleep(0)
         response = requests.post(
             f"http://{config.blaise_api_url}/api/v2/cati/serverparks/{config.blaise_server_park}/questionnaires/{questionnaire}/daybatch",
             json=post_data,

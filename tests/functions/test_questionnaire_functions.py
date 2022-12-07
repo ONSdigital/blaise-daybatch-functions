@@ -7,8 +7,7 @@ from functions.questionnaire_functions import (
     get_installed_questionnaire_data,
     get_questionnaires_with_active_survey_day_today_and_cases,
     check_questionnaire_has_daybatch,
-    create_daybatch_for_questionnaire,
-    create_daybatch_for_questionnaire_async,
+    create_daybatch_for_questionnaire, create_daybatch_for_questionnaire_background,
 )
 
 
@@ -52,19 +51,7 @@ def test_get_questionnaires_with_active_survey_day_today_and_cases_when_no_quest
     )
 
 
-@patch.object(asyncio, "ensure_future")
-def test_create_create_daybatch_for_questionnaire_passes_correct_arguments_to_asyncio(
-        mock_asyncio, mock_config):
-    # arrange
-
-    # act
-    create_daybatch_for_questionnaire(mock_config, "DST2106Z")
-
-    # assert
-    assert mock_asyncio.called_once()
-
-
-async def test_create_daybatch_for_questionnaire_async_returns_success(requests_mock, mock_config):
+async def test_create_daybatch_for_questionnaire_background_returns_success(requests_mock, mock_config):
     # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
@@ -72,13 +59,14 @@ async def test_create_daybatch_for_questionnaire_async_returns_success(requests_
     )
 
     # act
-    result = await create_daybatch_for_questionnaire_async(mock_config, "DST2106Z")
+    result = create_daybatch_for_questionnaire_background(mock_config, "DST2106Z")
 
     # assert
     assert result == "Success"
 
 
-async def test_create_daybatch_for_questionnaire_async_returns_failure_when_api_fails(requests_mock, mock_config):
+@patch("functions.questionnaire_functions.fire_and_forget")
+def test_create_daybatch_for_questionnaire_background_returns_failure_when_api_fails(mock_fire_and_forget, requests_mock, mock_config):
     # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
@@ -86,7 +74,7 @@ async def test_create_daybatch_for_questionnaire_async_returns_failure_when_api_
     )
 
     # act
-    result = await create_daybatch_for_questionnaire_async(mock_config, "DST2106Z")
+    result = create_daybatch_for_questionnaire_background(mock_config, "DST2106Z")
 
     # assert
     assert result == "Failure"
