@@ -1,12 +1,4 @@
 [[package]]
-name = "asyncio"
-version = "3.4.3"
-description = "reference implementation of PEP 3156"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "atomicwrites"
 version = "1.4.0"
 description = "Atomic file writes."
@@ -235,20 +227,6 @@ toml = "*"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-name = "pytest-asyncio"
-version = "0.20.2"
-description = "Pytest support for asyncio"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-pytest = ">=6.1.0"
-
-[package.extras]
-testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)", "flaky (>=3.5.0)", "mypy (>=0.931)", "pytest-trio (>=0.7.0)"]
-
-[[package]]
 name = "pytest-cov"
 version = "3.0.0"
 description = "Pytest plugin for measuring coverage."
@@ -348,10 +326,9 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "26b7be6239fcea7a55da4788f0121274d9d33bb20c0b0ef994afdc6e9478b577"
+content-hash = "9bf2548817b99c147a187608d00ea3175e4e82354fd8c9b5d6096260f789510f"
 
 [metadata.files]
-asyncio = []
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
     {file = "atomicwrites-1.4.0.tar.gz", hash = "sha256:ae70396ad1a434f9c7046fd2dd196fc04b12f9e91ffb859164193be8b6168a7a"},
@@ -417,7 +394,6 @@ pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
     {file = "pytest-6.2.5.tar.gz", hash = "sha256:131b36680866a76e6781d13f101efb86cf674ebb9762eb70d3082b6f29889e89"},
 ]
-pytest-asyncio = []
 pytest-cov = [
     {file = "pytest-cov-3.0.0.tar.gz", hash = "sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470"},
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},

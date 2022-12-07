@@ -1,6 +1,3 @@
-import asyncio
-from unittest.mock import patch
-
 import requests
 
 from functions.questionnaire_functions import (
@@ -51,7 +48,7 @@ def test_get_questionnaires_with_active_survey_day_today_and_cases_when_no_quest
     )
 
 
-async def test_create_daybatch_for_questionnaire_background_returns_success(requests_mock, mock_config):
+def test_create_daybatch_for_questionnaire_background_returns_success(requests_mock, mock_config):
     # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
