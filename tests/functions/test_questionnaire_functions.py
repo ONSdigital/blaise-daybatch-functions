@@ -4,7 +4,7 @@ from functions.questionnaire_functions import (
     get_installed_questionnaire_data,
     get_questionnaires_with_active_survey_day_today_and_cases,
     check_questionnaire_has_daybatch,
-    create_daybatch_for_questionnaire,
+    create_daybatch_for_questionnaire_thread,
 )
 
 
@@ -53,7 +53,7 @@ def test_create_daybatch_for_questionnaire_when_success(requests_mock, mock_conf
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
         status_code=201,
     )
-    assert create_daybatch_for_questionnaire(mock_config, "DST2106Z") == "Success"
+    assert create_daybatch_for_questionnaire_thread(mock_config, "DST2106Z") == "Success"
 
 
 def test_create_daybatch_for_questionnaire_when_failure(requests_mock, mock_config):
@@ -61,7 +61,7 @@ def test_create_daybatch_for_questionnaire_when_failure(requests_mock, mock_conf
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
         status_code=500,
     )
-    assert create_daybatch_for_questionnaire(mock_config, "DST2106Z") == "Failure"
+    assert create_daybatch_for_questionnaire_thread(mock_config, "DST2106Z") == "Failure"
 
 
 def test_check_questionnaire_has_daybatch_when_true(requests_mock, mock_config):

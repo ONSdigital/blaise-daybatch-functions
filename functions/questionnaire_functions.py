@@ -1,4 +1,6 @@
+import concurrent
 from datetime import datetime
+from itertools import repeat
 
 import requests
 
@@ -26,9 +28,15 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
 
 def create_daybatch_for_questionnaire(config, questionnaire):
     with concurrent.futures.ProcessPoolExecutor() as executor:
+        executor.map(
+            create_daybatch_for_questionnaire_thread,
+            repeat(config),
+            questionnaire,
+            chunksize=1
+        )
 
-    
 
+def create_daybatch_for_questionnaire_thread(config, questionnaire):
     print(f"Creating daybatch for questionnaire {questionnaire}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
