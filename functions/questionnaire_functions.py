@@ -1,4 +1,5 @@
 import asyncio
+import threading
 from datetime import datetime
 
 import requests
@@ -25,14 +26,14 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
     return active_survey_day_questionnaires
 
 
-def fire_and_forget(f):
-    def wrapped(*args, **kwargs):
-        return asyncio.get_event_loop().run_in_executor(None, f, *args, *kwargs)
+def fire_and_forget_thread(f):
+    def wrapped():
+        threading.Thread(target=f).start()
 
     return wrapped
 
 
-@fire_and_forget
+@fire_and_forget_thread
 def create_daybatch_for_questionnaire(config, questionnaire):
     create_daybatch_for_questionnaire_background(config, questionnaire)
 

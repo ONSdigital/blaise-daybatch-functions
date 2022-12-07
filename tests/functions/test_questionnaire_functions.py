@@ -65,8 +65,7 @@ async def test_create_daybatch_for_questionnaire_background_returns_success(requ
     assert result == "Success"
 
 
-@patch("functions.questionnaire_functions.fire_and_forget")
-def test_create_daybatch_for_questionnaire_background_returns_failure_when_api_fails(mock_fire_and_forget, requests_mock, mock_config):
+def test_create_daybatch_for_questionnaire_background_returns_failure_when_api_fails(requests_mock, mock_config):
     # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
