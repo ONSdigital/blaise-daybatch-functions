@@ -1,3 +1,6 @@
+import asyncio
+from unittest.mock import patch
+
 import requests
 
 from functions.questionnaire_functions import (
@@ -47,6 +50,18 @@ def test_get_questionnaires_with_active_survey_day_today_and_cases_when_no_quest
         )
         == []
     )
+
+
+@patch.object(asyncio, "ensure_future")
+def test_create_create_daybatch_for_questionnaire_passes_correct_arguments_to_asyncio(
+        mock_asyncio, mock_config):
+    # arrange
+
+    # act
+    create_daybatch_for_questionnaire(mock_config, "DST2106Z")
+
+    # assert
+    assert mock_asyncio.called_once()
 
 
 async def test_create_daybatch_for_questionnaire_async_returns_success(requests_mock, mock_config):
