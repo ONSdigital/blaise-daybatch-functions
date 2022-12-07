@@ -31,7 +31,7 @@ def create_daybatch_for_questionnaire(config, questionnaire):
         executor.map(
             create_daybatch_for_questionnaire_thread,
             repeat(config),
-            questionnaire,
+            {questionnaire},
             chunksize=1
         )
 
