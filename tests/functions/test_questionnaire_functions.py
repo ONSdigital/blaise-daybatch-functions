@@ -5,6 +5,7 @@ from functions.questionnaire_functions import (
     get_questionnaires_with_active_survey_day_today_and_cases,
     check_questionnaire_has_daybatch,
     create_daybatch_for_questionnaire,
+    create_daybatch_for_questionnaire_async,
 )
 
 
@@ -48,20 +49,32 @@ def test_get_questionnaires_with_active_survey_day_today_and_cases_when_no_quest
     )
 
 
-def test_create_daybatch_for_questionnaire_when_success(requests_mock, mock_config):
+async def test_create_daybatch_for_questionnaire_async_returns_success(requests_mock, mock_config):
+    # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
         status_code=201,
     )
-    assert create_daybatch_for_questionnaire(mock_config, "DST2106Z") == "Success"
+
+    # act
+    result = await create_daybatch_for_questionnaire_async(mock_config, "DST2106Z")
+
+    # assert
+    assert result == "Success"
 
 
-def test_create_daybatch_for_questionnaire_when_failure(requests_mock, mock_config):
+async def test_create_daybatch_for_questionnaire_async_returns_failure_when_api_fails(requests_mock, mock_config):
+    # arrange
     requests_mock.post(
         f"http://blah/api/v2/cati/serverparks/blah/questionnaires/DST2106Z/daybatch",
         status_code=500,
     )
-    assert create_daybatch_for_questionnaire(mock_config, "DST2106Z") == "Failure"
+
+    # act
+    result = await create_daybatch_for_questionnaire_async(mock_config, "DST2106Z")
+
+    # assert
+    assert result == "Failure"
 
 
 def test_check_questionnaire_has_daybatch_when_true(requests_mock, mock_config):

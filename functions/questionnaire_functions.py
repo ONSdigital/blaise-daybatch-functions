@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime
 
 import requests
@@ -25,10 +26,15 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
 
 
 def create_daybatch_for_questionnaire(config, questionnaire):
+    asyncio.ensure_future(create_daybatch_for_questionnaire_async(config, questionnaire))
+
+
+async def create_daybatch_for_questionnaire_async(config, questionnaire):
     print(f"Creating daybatch for questionnaire {questionnaire}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
     try:
+        await asyncio.sleep(0)
         response = requests.post(
             f"http://{config.blaise_api_url}/api/v2/cati/serverparks/{config.blaise_server_park}/questionnaires/{questionnaire}/daybatch",
             json=post_data,
