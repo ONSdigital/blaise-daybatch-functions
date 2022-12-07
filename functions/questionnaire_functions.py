@@ -1,8 +1,7 @@
-import requests
-import concurrent.futures
-
 from datetime import datetime
-from itertools import repeat
+
+import requests
+
 
 def get_installed_questionnaire_data(config):
     print(f"Getting questionnaire data")
@@ -26,6 +25,10 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
 
 
 def create_daybatch_for_questionnaire(config, questionnaire):
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+
+    
+
     print(f"Creating daybatch for questionnaire {questionnaire}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
@@ -47,27 +50,6 @@ def create_daybatch_for_questionnaire(config, questionnaire):
         print(
             f"Error when creating daybatch for questionnaire {questionnaire} via the API - ",
             error,
-        )
-
-
-def create_daybatch(config, questionnaire: str):
-    try:
-        if not check_questionnaire_has_daybatch(config, questionnaire):
-            create_daybatch_for_questionnaire(config, questionnaire)
-        else:
-            print(f"Questionnaire {questionnaire} already has a daybatch for today")
-    except Exception as error:
-        print(
-            f"An error '{error}' occured whilst checking/creating a daybatch for questionnaire {questionnaire}")
-
-
-def create_daybatches_concurrently(questionnaires_with_active_survey_day_today_and_cases, config):
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        executor.map(
-            create_daybatch,
-            repeat(config),
-            questionnaires_with_active_survey_day_today_and_cases,
-            chunksize=10
         )
 
 

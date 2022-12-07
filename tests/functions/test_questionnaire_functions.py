@@ -5,11 +5,8 @@ from functions.questionnaire_functions import (
     get_questionnaires_with_active_survey_day_today_and_cases,
     check_questionnaire_has_daybatch,
     create_daybatch_for_questionnaire,
-    create_daybatches_concurrently,
-    create_daybatch
 )
 
-from unittest.mock import patch
 
 def test_get_installed_questionnaire_data(
     requests_mock, mock_config, mock_installed_questionnaire_data

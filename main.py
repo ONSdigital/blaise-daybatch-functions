@@ -1,3 +1,5 @@
+import concurrent
+from itertools import repeat
 import os
 
 from dotenv import load_dotenv
@@ -6,7 +8,7 @@ from functions.questionnaire_functions import (
     get_installed_questionnaire_data,
     get_questionnaires_with_active_survey_day_today_and_cases,
     check_questionnaire_has_daybatch,
-    create_daybatches_concurrently
+    create_daybatch_for_questionnaire
 )
 from functions.notify_functions import send_email_notification_for_questionnaire_without_daybatch
 from models.config_model import Config
@@ -25,7 +27,14 @@ def create_daybatches(_event, _context):
     if not questionnaires_with_active_survey_day_today_and_cases:
         print(f"No questionnaires installed with an active survey day of today and has cases")
         return "No questionnaires installed with an active survey day of today and has cases"
-    create_daybatches_concurrently(questionnaires_with_active_survey_day_today_and_cases, config)
+    for questionnaire in questionnaires_with_active_survey_day_today_and_cases:
+        try:
+            if not check_questionnaire_has_daybatch(config, questionnaire):
+                create_daybatch_for_questionnaire(config, questionnaire)
+            else:
+                print(f"Questionnaire {questionnaire} already has a daybatch for today")
+        except Exception as error:
+            print(f"An error '{error}' occured whilst checking/creating a daybatch for questionnaire {questionnaire}")
     return "Finished"
 
 
