@@ -1,4 +1,4 @@
-import concurrent
+import concurrent.futures
 from datetime import datetime
 from itertools import repeat
 
