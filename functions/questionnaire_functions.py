@@ -1,3 +1,4 @@
+import threading
 from datetime import datetime
 
 import requests
@@ -24,7 +25,18 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
     return active_survey_day_questionnaires
 
 
+def fire_and_forget_thread(func):
+    def wrapped(*args, **kwargs):
+        threading.Thread(target=func, args=args, kwargs=kwargs).start()
+    return wrapped
+
+
+@fire_and_forget_thread
 def create_daybatch_for_questionnaire(config, questionnaire):
+    create_daybatch_for_questionnaire_background(config, questionnaire)
+
+
+def create_daybatch_for_questionnaire_background(config, questionnaire):
     print(f"Creating daybatch for questionnaire {questionnaire}")
     today = datetime.now()
     post_data = {"dayBatchDate": str(today), "checkForTreatedCases": True}
