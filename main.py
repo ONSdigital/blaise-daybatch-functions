@@ -36,7 +36,7 @@ def create_daybatches(_event, _context):
     return "Finished"
 
 
-def check_daybatches(_event, _context):
+def check_daybatches(request, _content=None):
     print("Running Cloud Function - check_daybatches")
     config = Config.from_env()
     config.log()
