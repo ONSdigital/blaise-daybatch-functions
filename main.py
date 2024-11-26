@@ -1,4 +1,5 @@
 import os
+import flask
 
 from dotenv import load_dotenv
 
@@ -12,7 +13,7 @@ from functions.notify_functions import send_email_notification_for_questionnaire
 from models.config_model import Config
 
 
-def create_daybatches(_event, _context):
+def create_daybatches(_request: flask.Request):
     print(f"Running Cloud Function - create_daybatches")
     config = Config.from_env()
     config.log()
