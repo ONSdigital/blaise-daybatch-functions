@@ -84,7 +84,7 @@ def step_impl(context):
             with mock.patch("main.send_email_notification_for_questionnaire_without_daybatch") as \
                     mock_send_email_notification_for_questionnaire_without_daybatch:
                 mock_send_email_notification_for_questionnaire_without_daybatch.side_effect = mock_send_email(context)
-                check_daybatches(None, None)
+                check_daybatches({})
 
 
 @given("'{questionnaire_name}' is installed")
