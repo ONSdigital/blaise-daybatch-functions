@@ -12,7 +12,7 @@ from functions.notify_functions import send_email_notification_for_questionnaire
 from models.config_model import Config
 
 
-def create_daybatches(_event, _context):
+def create_daybatches(_request):
     print(f"Running Cloud Function - create_daybatches")
     config = Config.from_env()
     config.log()
@@ -36,7 +36,7 @@ def create_daybatches(_event, _context):
     return "Finished"
 
 
-def check_daybatches(request, _content=None):
+def check_daybatches(_request):
     print("Running Cloud Function - check_daybatches")
     config = Config.from_env()
     config.log()
