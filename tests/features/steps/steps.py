@@ -70,7 +70,7 @@ def step_impl(context):
             mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(context)
             with mock.patch("main.create_daybatch_for_questionnaire") as mock_create_daybatch_for_questionnaire:
                 mock_create_daybatch_for_questionnaire.side_effect = mock_create_daybatch(context)
-                create_daybatches(None, None)
+                create_daybatches({})
 
 
 @when("the check daybatch process is triggered")
@@ -84,7 +84,7 @@ def step_impl(context):
             with mock.patch("main.send_email_notification_for_questionnaire_without_daybatch") as \
                     mock_send_email_notification_for_questionnaire_without_daybatch:
                 mock_send_email_notification_for_questionnaire_without_daybatch.side_effect = mock_send_email(context)
-                check_daybatches(None, None)
+                check_daybatches({})
 
 
 @given("'{questionnaire_name}' is installed")
