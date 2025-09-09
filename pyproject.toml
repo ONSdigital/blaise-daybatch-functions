@@ -3,20 +3,21 @@ name = "blaise-daybatch-functions"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.13"
 requests = "^2.26.0"
-python-dotenv = "^0.19.2"
+python-dotenv = "^1.1.1"
 requests-mock = "^1.9.3"
-pytest = "^6.2.5"
-mock = "^4.0.3"
-behave = "^1.2.6"
-coverage = "^6.2"
-pytest-cov = "^3.0.0"
-notifications-python-client = "^6.3.0"
+notifications-python-client = "^10.0.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+mock = "^5.2.0"
+behave = "^1.2.6"
+coverage = "^7.10.6"
+pytest-cov = "^6.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
