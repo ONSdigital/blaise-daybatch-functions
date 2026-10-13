@@ -5,7 +5,7 @@ import requests
 
 
 def get_installed_questionnaire_data(config):
-    print(f"Getting questionnaire data")
+    print("Getting questionnaire data")
     try:
         response = requests.get(
             f"http://{config.blaise_api_url}/api/v2/cati/serverparks/{config.blaise_server_park}/questionnaires"
@@ -13,11 +13,13 @@ def get_installed_questionnaire_data(config):
         data = response.json()
         return data
     except requests.exceptions.RequestException as error:
-        print(f"Error when getting installed questionnaire data via the API - ", error)
+        print("Error when getting installed questionnaire data via the API - ", error)
 
 
-def get_questionnaires_with_active_survey_day_today_and_cases(installed_questionnaire_data):
-    print(f"Getting questionnaires with an active survey day of today and has cases")
+def get_questionnaires_with_active_survey_day_today_and_cases(
+    installed_questionnaire_data,
+):
+    print("Getting questionnaires with an active survey day of today and has cases")
     active_survey_day_questionnaires = []
     for questionnaire in installed_questionnaire_data:
         if questionnaire["activeToday"] and questionnaire["dataRecordCount"] > 0:
@@ -28,6 +30,7 @@ def get_questionnaires_with_active_survey_day_today_and_cases(installed_question
 def fire_and_forget_thread(func):
     def wrapped(*args, **kwargs):
         threading.Thread(target=func, args=args, kwargs=kwargs).start()
+
     return wrapped
 
 

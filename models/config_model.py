@@ -1,14 +1,13 @@
 import os
-
 from dataclasses import dataclass
 
 
 @dataclass
 class Config:
-    blaise_server_park: str
-    blaise_api_url: str
-    notify_api_key: str
-    to_notify_email: str
+    blaise_server_park: str | None
+    blaise_api_url: str | None
+    notify_api_key: str | None
+    to_notify_email: str | None
 
     @classmethod
     def from_env(cls):
