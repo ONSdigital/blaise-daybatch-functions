@@ -1,13 +1,9 @@
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
-def send_email_notification_for_questionnaire_without_daybatch(
-    config, questionnaire_name
-):
+def send_email_notification_for_questionnaire_without_daybatch(config, questionnaire_name):
     try:
-        print(
-            f"Sending email notification for questionnaire {questionnaire_name} to {config.to_notify_email}"
-        )
+        print(f"Sending email notification for questionnaire {questionnaire_name} to {config.to_notify_email}")
         notifications_client = NotificationsAPIClient(config.notify_api_key)
         notifications_client.send_email_notification(
             email_address=f"{config.to_notify_email}",

@@ -53,24 +53,12 @@ def step_impl(context):
 def step_impl(context):
     if not hasattr(context, "created_daybatches"):
         context.created_daybatches = {}
-    with mock.patch(
-        "main.get_installed_questionnaire_data"
-    ) as mock_get_installed_questionnaire_data:
-        mock_get_installed_questionnaire_data.return_value = (
-            context.installed_questionnaire_data.values()
-        )
-        with mock.patch(
-            "main.check_questionnaire_has_daybatch"
-        ) as mock_check_questionnaire_has_daybatch:
-            mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(
-                context
-            )
-            with mock.patch(
-                "main.create_daybatch_for_questionnaire"
-            ) as mock_create_daybatch_for_questionnaire:
-                mock_create_daybatch_for_questionnaire.side_effect = (
-                    mock_create_daybatch(context)
-                )
+    with mock.patch("main.get_installed_questionnaire_data") as mock_get_installed_questionnaire_data:
+        mock_get_installed_questionnaire_data.return_value = context.installed_questionnaire_data.values()
+        with mock.patch("main.check_questionnaire_has_daybatch") as mock_check_questionnaire_has_daybatch:
+            mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(context)
+            with mock.patch("main.create_daybatch_for_questionnaire") as mock_create_daybatch_for_questionnaire:
+                mock_create_daybatch_for_questionnaire.side_effect = mock_create_daybatch(context)
                 create_daybatches({})
 
 
@@ -78,24 +66,14 @@ def step_impl(context):
 def step_impl(context):
     if not hasattr(context, "checked_daybatches"):
         context.sent_email = {}
-    with mock.patch(
-        "main.get_installed_questionnaire_data"
-    ) as mock_get_installed_questionnaire_data:
-        mock_get_installed_questionnaire_data.return_value = (
-            context.installed_questionnaire_data.values()
-        )
-        with mock.patch(
-            "main.check_questionnaire_has_daybatch"
-        ) as mock_check_questionnaire_has_daybatch:
-            mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(
-                context
-            )
+    with mock.patch("main.get_installed_questionnaire_data") as mock_get_installed_questionnaire_data:
+        mock_get_installed_questionnaire_data.return_value = context.installed_questionnaire_data.values()
+        with mock.patch("main.check_questionnaire_has_daybatch") as mock_check_questionnaire_has_daybatch:
+            mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(context)
             with mock.patch(
                 "main.send_email_notification_for_questionnaire_without_daybatch"
             ) as mock_send_email_notification_for_questionnaire_without_daybatch:
-                mock_send_email_notification_for_questionnaire_without_daybatch.side_effect = mock_send_email(
-                    context
-                )
+                mock_send_email_notification_for_questionnaire_without_daybatch.side_effect = mock_send_email(context)
                 check_daybatches({})
 
 
@@ -103,59 +81,39 @@ def step_impl(context):
 def step_impl(context, questionnaire_name):
     if not hasattr(context, "installed_questionnaire_data"):
         context.installed_questionnaire_data = {}
-    mock_installed_questionnaire_data = deepcopy(
-        mock_installed_questionnaire_data_template
-    )
+    mock_installed_questionnaire_data = deepcopy(mock_installed_questionnaire_data_template)
     mock_installed_questionnaire_data["name"] = questionnaire_name
-    context.installed_questionnaire_data[questionnaire_name] = (
-        mock_installed_questionnaire_data
-    )
+    context.installed_questionnaire_data[questionnaire_name] = mock_installed_questionnaire_data
 
 
 @given("'{questionnaire_name}' has an active survey day of today")
 def step_impl(context, questionnaire_name):
     context.installed_questionnaire_data[questionnaire_name]
-    installed_questionnaire_data = context.installed_questionnaire_data[
-        questionnaire_name
-    ]
+    installed_questionnaire_data = context.installed_questionnaire_data[questionnaire_name]
     installed_questionnaire_data["activeToday"] = True
-    context.installed_questionnaire_data[questionnaire_name] = (
-        installed_questionnaire_data
-    )
+    context.installed_questionnaire_data[questionnaire_name] = installed_questionnaire_data
 
 
 @given("'{questionnaire_name}' has cases")
 def step_impl(context, questionnaire_name):
-    installed_questionnaire_data = context.installed_questionnaire_data[
-        questionnaire_name
-    ]
+    installed_questionnaire_data = context.installed_questionnaire_data[questionnaire_name]
     installed_questionnaire_data["dataRecordCount"] = 100
-    context.installed_questionnaire_data[questionnaire_name] = (
-        installed_questionnaire_data
-    )
+    context.installed_questionnaire_data[questionnaire_name] = installed_questionnaire_data
 
 
 @given("'{questionnaire_name}' does not have an active survey day of today")
 def step_impl(context, questionnaire_name):
     context.installed_questionnaire_data[questionnaire_name]
-    installed_questionnaire_data = context.installed_questionnaire_data[
-        questionnaire_name
-    ]
+    installed_questionnaire_data = context.installed_questionnaire_data[questionnaire_name]
     installed_questionnaire_data["activeToday"] = False
-    context.installed_questionnaire_data[questionnaire_name] = (
-        installed_questionnaire_data
-    )
+    context.installed_questionnaire_data[questionnaire_name] = installed_questionnaire_data
 
 
 @given("'{questionnaire_name}' does not have cases")
 def step_impl(context, questionnaire_name):
-    installed_questionnaire_data = context.installed_questionnaire_data[
-        questionnaire_name
-    ]
+    installed_questionnaire_data = context.installed_questionnaire_data[questionnaire_name]
     installed_questionnaire_data["dataRecordCount"] = 0
-    context.installed_questionnaire_data[questionnaire_name] = (
-        installed_questionnaire_data
-    )
+    context.installed_questionnaire_data[questionnaire_name] = installed_questionnaire_data
 
 
 @then("no daybatches are created")
@@ -193,13 +151,9 @@ def step_impl(context, questionnaire_name):
 
 @then("a notify email is sent for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.sent_email.get(questionnaire_name, 0) > 0, (
-        f"context.sent_email - {context.sent_email}"
-    )
+    assert context.sent_email.get(questionnaire_name, 0) > 0, f"context.sent_email - {context.sent_email}"
 
 
 @then("a notify email is not sent for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.sent_email.get(questionnaire_name, 0) == 0, (
-        f"context.sent_email - {context.sent_email}"
-    )
+    assert context.sent_email.get(questionnaire_name, 0) == 0, f"context.sent_email - {context.sent_email}"

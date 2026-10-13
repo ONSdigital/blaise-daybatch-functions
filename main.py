@@ -22,15 +22,11 @@ def create_daybatches(_request):
     if not installed_questionnaire_data:
         print("No questionnaires installed")
         return "No questionnaires installed"
-    questionnaires_with_active_survey_day_today_and_cases = (
-        get_questionnaires_with_active_survey_day_today_and_cases(
-            installed_questionnaire_data
-        )
+    questionnaires_with_active_survey_day_today_and_cases = get_questionnaires_with_active_survey_day_today_and_cases(
+        installed_questionnaire_data
     )
     if not questionnaires_with_active_survey_day_today_and_cases:
-        print(
-            "No questionnaires installed with an active survey day of today and has cases"
-        )
+        print("No questionnaires installed with an active survey day of today and has cases")
         return "No questionnaires installed with an active survey day of today and has cases"
     for questionnaire in questionnaires_with_active_survey_day_today_and_cases:
         try:
@@ -39,9 +35,7 @@ def create_daybatches(_request):
             else:
                 print(f"Questionnaire {questionnaire} already has a daybatch for today")
         except Exception as error:
-            print(
-                f"An error '{error}' occured whilst checking/creating a daybatch for questionnaire {questionnaire}"
-            )
+            print(f"An error '{error}' occured whilst checking/creating a daybatch for questionnaire {questionnaire}")
     return "Finished"
 
 
@@ -53,22 +47,16 @@ def check_daybatches(_request):
     if not installed_questionnaire_data:
         print("No questionnaires installed")
         return "No questionnaires installed"
-    questionnaires_with_active_survey_day_today_and_cases = (
-        get_questionnaires_with_active_survey_day_today_and_cases(
-            installed_questionnaire_data
-        )
+    questionnaires_with_active_survey_day_today_and_cases = get_questionnaires_with_active_survey_day_today_and_cases(
+        installed_questionnaire_data
     )
     if not questionnaires_with_active_survey_day_today_and_cases:
-        print(
-            "No questionnaires installed with an active survey day of today and has cases"
-        )
+        print("No questionnaires installed with an active survey day of today and has cases")
         return "No questionnaires installed with an active survey day of today and has cases"
     for questionnaire in questionnaires_with_active_survey_day_today_and_cases:
         try:
             if not check_questionnaire_has_daybatch(config, questionnaire):
-                send_email_notification_for_questionnaire_without_daybatch(
-                    config, questionnaire
-                )
+                send_email_notification_for_questionnaire_without_daybatch(config, questionnaire)
         except Exception as error:
             print(
                 f"An error '{error}' occured whilst checking a daybatch or sending an email "
