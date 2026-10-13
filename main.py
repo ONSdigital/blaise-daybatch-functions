@@ -71,7 +71,8 @@ def check_daybatches(_request):
                 )
         except Exception as error:
             print(
-                f"An error '{error}' occured whilst checking a daybatch or sending an email for questionnaire {questionnaire}"
+                f"An error '{error}' occured whilst checking a daybatch or sending an email "
+                f"for questionnaire {questionnaire}"
             )
     return "Finished"
 

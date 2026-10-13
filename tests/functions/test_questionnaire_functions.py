@@ -21,7 +21,7 @@ def test_get_installed_questionnaire_data(
     )
 
 
-def test_get_questionnaires_with_active_survey_day_today_and_cases_returns_only_questionnaires_with_active_survey_day_today_and_cases(
+def test_get_questionnaires_with_active_survey_day_today_and_cases_returns_only_questionnaires_active_today_with_cases(
     mock_installed_questionnaire_data,
 ):
     assert get_questionnaires_with_active_survey_day_today_and_cases(
@@ -29,7 +29,7 @@ def test_get_questionnaires_with_active_survey_day_today_and_cases_returns_only_
     ) == ["DST2106X", "DST2106Y"]
 
 
-def test_get_questionnaires_with_active_survey_day_today_and_cases_when_no_questionnaires_have_an_active_survey_day_today(
+def test_get_questionnaires_with_active_survey_day_today_and_cases_returns_empty_list_when_none_have_active_today(
     mock_installed_questionnaire_data_with_no_active_survey_day_today,
 ):
     assert (

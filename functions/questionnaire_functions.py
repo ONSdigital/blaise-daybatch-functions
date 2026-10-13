@@ -1,5 +1,6 @@
 import threading
 from datetime import datetime
+from http import HTTPStatus
 
 import requests
 
@@ -48,7 +49,7 @@ def create_daybatch_for_questionnaire_background(config, questionnaire):
             f"http://{config.blaise_api_url}/api/v2/cati/serverparks/{config.blaise_server_park}/questionnaires/{questionnaire}/daybatch",
             json=post_data,
         )
-        if response.status_code == 201:
+        if response.status_code == HTTPStatus.CREATED:
             print(f"Daybatch successfully created for {questionnaire}")
             return "Success"
         else:
@@ -70,7 +71,7 @@ def check_questionnaire_has_daybatch(config, questionnaire):
         response = requests.get(
             f"http://{config.blaise_api_url}/api/v2/cati/serverparks/{config.blaise_server_park}/questionnaires/{questionnaire}/daybatch/today"
         )
-        if response.status_code == 200 and response.json():
+        if response.status_code == HTTPStatus.OK and response.json():
             print(f"Questionnaire {questionnaire} has a daybatch for today")
             return True
         else:
