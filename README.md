@@ -12,7 +12,7 @@ The email template comes from gov.notify portal (see Rich for credentials :eyes)
 
 Email wording changed on 07/04/22 to "Questionnaire {questionnaire} may not have a daybatch".
 
-### Local Setup
+## Local Setup
 
 Clone the project locally:
 
@@ -20,7 +20,9 @@ Clone the project locally:
 git clone https://github.com/ONSdigital/blaise-daybatch-functions.git
 ```
 
-Setup a virtual environment:
+### Set up a virtual environment:
+
+If `poetry` is already installed globally, skip virtual environment setup and follow from [Install dependencies](#install-dependencies) step.
 
 macOS:
 
@@ -42,7 +44,7 @@ Install poetry:
 pip install poetry
 ```
 
-Install dependencies:
+### Install dependencies:
 
 ```shell
 poetry install
@@ -88,24 +90,63 @@ The local environment variables aren't necessary if you're only running the unit
 
 Run the "create_daybatches" Cloud Function:
 
-```
+```shell
 poetry run python -c "from main import create_daybatches; create_daybatches(None, None)"
 ```
 
 Run the "check_daybatches" Cloud Function:
 
-```
+```shell
 poetry run python -c "from main import check_daybatches; check_daybatches(None, None)"
 ```
 
-Run Unit Tests
+## Linting
 
+- Run `make lint` to run lint checks.
+- Run `make lint-fix` to apply auto-fixes and formatting.
 ```shell
-poetry run python -m pytest
+make lint
+make lint-fix
 ```
 
-Run Behave BDD Tests
+## Type Checking
+
+- Run `make typecheck` to run static type checks.
+- Type checking is powered by Pyright and configured for strict checking in `pyproject.toml`.
+- Only `models/config_models.py` has type annotations, so Pyright includes only the `models` directory; configured in `pyproject.toml`.
 
 ```shell
-poetry run python -m behave tests/features
+make typecheck
+```
+
+## Check for unused or missing Python dependencies
+
+- Run `make deptry` to check for unused or missing dependencies
+```shell
+make deptry
+```
+
+
+## Check for dead (unused) Python code
+
+- Run `make vulture` to check for unused Python code
+```shell
+make vulture
+```
+
+
+
+## Unit tests
+
+- Run `make test` to run tests and report coverage.
+- The coverage report omits test files.
+
+```shell
+make test
+```
+
+## Run Behave BDD Tests
+- Run `make test-behave` to run the behave tests.
+```shell
+make test-behave
 ```

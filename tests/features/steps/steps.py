@@ -3,12 +3,10 @@ from unittest import mock
 
 from behave import given, then, when
 
-from main import create_daybatches, check_daybatches
+from main import check_daybatches, create_daybatches
 
 mock_installed_questionnaire_data_template = {
-    "surveyDays": [
-        "2021-01-01T01:01:01.999Z"
-    ],
+    "surveyDays": ["2021-01-01T01:01:01.999Z"],
     "name": "",
     "id": "12345-12345-12345-12345-XXXXX",
     "serverParkName": "gusty",
@@ -18,19 +16,10 @@ mock_installed_questionnaire_data_template = {
     "dataRecordCount": None,
     "hasData": True,
     "nodes": [
-        {
-            "nodeName": "blaise-gusty-mgmt",
-            "nodeStatus": "Active"
-        },
-        {
-            "nodeName": "blaise-gusty-data-entry-1",
-            "nodeStatus": "Active"
-        },
-        {
-            "nodeName": "blaise-gusty-data-entry-2",
-            "nodeStatus": "Active"
-        }
-    ]
+        {"nodeName": "blaise-gusty-mgmt", "nodeStatus": "Active"},
+        {"nodeName": "blaise-gusty-data-entry-1", "nodeStatus": "Active"},
+        {"nodeName": "blaise-gusty-data-entry-2", "nodeStatus": "Active"},
+    ],
 }
 
 
@@ -81,8 +70,9 @@ def step_impl(context):
         mock_get_installed_questionnaire_data.return_value = context.installed_questionnaire_data.values()
         with mock.patch("main.check_questionnaire_has_daybatch") as mock_check_questionnaire_has_daybatch:
             mock_check_questionnaire_has_daybatch.side_effect = mock_has_daybatch(context)
-            with mock.patch("main.send_email_notification_for_questionnaire_without_daybatch") as \
-                    mock_send_email_notification_for_questionnaire_without_daybatch:
+            with mock.patch(
+                "main.send_email_notification_for_questionnaire_without_daybatch"
+            ) as mock_send_email_notification_for_questionnaire_without_daybatch:
                 mock_send_email_notification_for_questionnaire_without_daybatch.side_effect = mock_send_email(context)
                 check_daybatches({})
 
@@ -133,14 +123,16 @@ def step_impl(context):
 
 @then("a daybatch is created for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.created_daybatches.get(questionnaire_name, 0) > 0, \
+    assert context.created_daybatches.get(questionnaire_name, 0) > 0, (
         f"context.created_daybatches - {context.created_daybatches}"
+    )
 
 
 @then("a daybatch is not created for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.created_daybatches.get(questionnaire_name, 0) == 0, \
+    assert context.created_daybatches.get(questionnaire_name, 0) == 0, (
         f"context.created_daybatches - {context.created_daybatches}"
+    )
 
 
 @given("'{questionnaire_name}' does not have a daybatch")
@@ -159,11 +151,9 @@ def step_impl(context, questionnaire_name):
 
 @then("a notify email is sent for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.sent_email.get(questionnaire_name, 0) > 0, \
-        f"context.sent_email - {context.sent_email}"
+    assert context.sent_email.get(questionnaire_name, 0) > 0, f"context.sent_email - {context.sent_email}"
 
 
 @then("a notify email is not sent for '{questionnaire_name}'")
 def step_impl(context, questionnaire_name):
-    assert context.sent_email.get(questionnaire_name, 0) == 0, \
-        f"context.sent_email - {context.sent_email}"
+    assert context.sent_email.get(questionnaire_name, 0) == 0, f"context.sent_email - {context.sent_email}"

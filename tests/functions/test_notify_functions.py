@@ -2,7 +2,9 @@ from unittest.mock import patch
 
 from notifications_python_client.notifications import NotificationsAPIClient
 
-from functions.notify_functions import send_email_notification_for_questionnaire_without_daybatch
+from functions.notify_functions import (
+    send_email_notification_for_questionnaire_without_daybatch,
+)
 
 
 @patch.object(NotificationsAPIClient, "send_email_notification")
