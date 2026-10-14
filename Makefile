@@ -1,4 +1,4 @@
-.PHONY: lint lint-fix typecheck deptry vulture test
+.PHONY: lint lint-fix typecheck deptry vulture test test-behave
 
 lint:
 	poetry run ruff check
